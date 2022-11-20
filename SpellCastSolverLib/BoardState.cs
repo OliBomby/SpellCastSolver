@@ -1,6 +1,6 @@
 ﻿namespace SpellCastSolverLib;
 
-public struct BoardState
+public class BoardState
 {
     public readonly LetterState[,] Board;
     public int Gems;

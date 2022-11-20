@@ -1,6 +1,6 @@
 ﻿namespace SpellCastSolverLib;
 
-public struct LetterState
+public class LetterState
 {
     public char Letter;
     public int PointsMultiplier;
