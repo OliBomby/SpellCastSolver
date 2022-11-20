@@ -62,7 +62,8 @@ public class LetterDrawable : CompositeDrawable
         {
             RelativeAnchorPosition = new  Vector2(0.2f, 0.75f),
             Size = new Vector2(5, 10),
-            Colour = state.Gem ? Color4.Magenta : Color4.Transparent,
+            Colour = Color4.Magenta,
+            Alpha = state.Gem ? 1 : 0,
             Origin = Anchor.Centre,
         });
     }
@@ -70,7 +71,7 @@ public class LetterDrawable : CompositeDrawable
     protected override bool OnClick(ClickEvent e)
     {
         state.Gem = !state.Gem;
-        gemBox.FadeColour(state.Gem ? Color4.Magenta : Color4.Transparent, 100);
+        gemBox.FadeTo(state.Gem ? 1 : 0, 100);
 
         return true;
     }
