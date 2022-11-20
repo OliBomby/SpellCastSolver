@@ -37,7 +37,7 @@ public class LetterDrawable : CompositeDrawable
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Text = state.Letter.ToString(),
+                Text = state.Letter.ToString().ToUpper(),
                 Colour = state.PointsMultiplier == 1 ? state.Multiplier == 1 ? Color4.Black : Color4.Magenta : Color4.Yellow,
                 Scale = new Vector2(2)
             },
@@ -45,7 +45,7 @@ public class LetterDrawable : CompositeDrawable
             {
                 RelativeAnchorPosition = new Vector2(0.8f, 0.8f),
                 Origin = Anchor.Centre,
-                Text = state.Points.ToString(),
+                Text = (state.Points * state.PointsMultiplier).ToString(),
                 Colour = Color4.Black,
                 Scale = new Vector2(0.7f)
             },

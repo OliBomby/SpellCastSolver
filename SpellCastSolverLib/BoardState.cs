@@ -3,7 +3,10 @@
 public struct BoardState
 {
     public readonly LetterState[,] Board;
-    public readonly int Gems;
+    public int Gems;
+
+    public int Rows => Board.GetLength(0);
+    public int Cols => Board.GetLength(1);
 
     public BoardState(LetterState[,] board, int gems)
     {
@@ -13,10 +16,14 @@ public struct BoardState
 
     public static BoardState Default => new(new LetterState[,]
     {
-        { new('H', 4), new('B', 4), new('O', 3, 3, gem:true), new('G', 3, gem:true), new('E', 1) },
-        { new('E', 1, gem:true), new('R', 2), new('E', 1,gem:true), new('W', 5), new('A', 1) },
-        { new('Q', 8), new('I', 1), new('F', 5), new('X', 7), new('T', 2) },
-        { new('O', 1), new('T', 2), new('N', 2), new('E', 1, gem:true), new('U', 4, multiplier:2) },
-        { new('I', 1, gem:true), new('L', 3, gem:true), new('D', 3), new('I', 1, gem:true), new('O', 1, gem:true) }
+        { new('H'), new('B'), new('O', 3, gem:true), new('G', gem:true), new('E') },
+        { new('E', gem:true), new('R'), new('E', gem:true), new('W'), new('A') },
+        { new('Q'), new('I'), new('F'), new('X'), new('T') },
+        { new('O'), new('T'), new('N'), new('E', gem:true), new('U', multiplier:2) },
+        { new('I', gem:true), new('L', gem:true), new('D'), new('I', gem:true), new('O', gem:true) }
     }, 0);
+
+    public bool IsValid((int, int) pos) {
+        return pos.Item1 >= 0 && pos.Item1 < Rows && pos.Item2 >= 0 && pos.Item2 < Cols;
+    }
 }
