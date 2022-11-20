@@ -15,10 +15,11 @@ namespace SpellCastSolver.Game.Components;
 public class ResultDrawable : CompositeDrawable
 {
     private readonly SolveResult result;
-    private Drawable box;
+    private Drawable box = null!;
     private readonly BindableBool isActive = new();
 
     public IBindable<bool> IsActive => isActive;
+    public SolveResult Result => result;
 
     public ResultDrawable(SolveResult result) {
         this.result = result;

@@ -1,6 +1,7 @@
 ﻿using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Lines;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osuTK;
@@ -13,6 +14,7 @@ public class BoardDrawable : CompositeDrawable
 {
     private readonly BoardState state;
     private SpriteText gemsText = null!;
+    private SmoothPath path = null!;
 
     public BoardDrawable(BoardState state) {
         this.state = state;
@@ -70,5 +72,33 @@ public class BoardDrawable : CompositeDrawable
             HoverColour = Color4.Pink,
             FlashColour = Color4.HotPink,
         });
+
+        AddInternal(path = new SmoothPath
+        {
+            Anchor = Anchor.TopLeft,
+            Origin = Anchor.TopLeft,
+            PathRadius = 4,
+            Colour = Color4.Yellow,
+            Alpha = 0.5f
+        });
+    }
+
+    public void SetPath((int, int)[] vertices)
+    {
+        if (vertices.Length == 0)
+        {
+            path.ClearVertices();
+            return;
+        }
+
+        path.ClearVertices();
+
+        foreach (var (r, c) in vertices)
+        {
+            path.AddVertex(new Vector2(c * 60, r * 60));
+        }
+
+        var start = new Vector2(vertices[0].Item2 * 60, vertices[0].Item1 * 60);
+        path.Position = start - path.PositionInBoundingBox(start) + new Vector2(30);
     }
 }

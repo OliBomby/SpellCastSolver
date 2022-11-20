@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -16,7 +17,7 @@ namespace SpellCastSolver.Game {
     public class MainScreen : Screen {
         private FillFlowContainer resultsContainer = null!;
         private Solver solver = null!;
-        private BoardState boardState = BoardState.Default;
+        private readonly BoardState boardState = BoardState.Default;
         private BasicTextBox input = null!;
         private BoardDrawable boardDrawable = null!;
 
@@ -121,16 +122,24 @@ namespace SpellCastSolver.Game {
         private void solve()
         {
             var result = solver.Solve(boardState);
-            resultsContainer.Clear();
+            resultsContainer.Clear(true);
 
-            foreach (var solveResult in result.OrderByDescending(o => o.Points))
+            foreach (var solveResult in result.OrderByDescending(o => o.Points).Take(40))
             {
-                resultsContainer.Add(new ResultDrawable(solveResult)
+                var resultDrawable = new ResultDrawable(solveResult)
                 {
                     Anchor = Anchor.TopRight,
                     Origin = Anchor.TopRight,
-                });
+                };
+
+                resultsContainer.Add(resultDrawable);
+                resultDrawable.IsActive.ValueChanged += e => IsActiveOnValueChanged(e, resultDrawable);
             }
+        }
+
+        private void IsActiveOnValueChanged(ValueChangedEvent<bool> changedEvent, ResultDrawable result)
+        {
+            boardDrawable.SetPath(changedEvent.NewValue ? result.Result.Path : Array.Empty<(int, int)>());
         }
     }
 }
