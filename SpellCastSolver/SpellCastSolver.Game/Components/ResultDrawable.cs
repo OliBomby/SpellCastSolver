@@ -1,9 +1,11 @@
 ﻿using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
 using SpellCastSolverLib;
@@ -13,6 +15,10 @@ namespace SpellCastSolver.Game.Components;
 public class ResultDrawable : CompositeDrawable
 {
     private readonly SolveResult result;
+    private Drawable box;
+    private readonly BindableBool isActive = new();
+
+    public IBindable<bool> IsActive => isActive;
 
     public ResultDrawable(SolveResult result) {
         this.result = result;
@@ -26,12 +32,11 @@ public class ResultDrawable : CompositeDrawable
     {
         InternalChildren = new Drawable[]
         {
-            new Box
+            box = new Box
             {
                 RelativeSizeAxes = Axes.Both,
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft,
-                Colour = Color4.Gray,
             }.WithEffect(new EdgeEffect { CornerRadius = 5 }),
             new SpriteText
             {
@@ -59,5 +64,15 @@ public class ResultDrawable : CompositeDrawable
                 Colour = Color4.Magenta
             },
         };
+
+        box.Colour = isActive.Value ? Color4.LightGray : Color4.Gray;
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        isActive.Value = !isActive.Value;
+        box.FadeColour(isActive.Value ? Color4.LightGray : Color4.Gray, 100);
+
+        return true;
     }
 }
