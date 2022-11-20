@@ -68,11 +68,11 @@ public class Solver {
                 var matches = trie.Retrieve(word.ToString().ToLower());
                 var any = false;
                 foreach (int match in matches) {
-                    var matchWord = words[match];
+                    string matchWord = words[match];
                     // Create result if the whole word is matched
-                    if (word.Length == matchWord.Length && word.Length > 4) {
+                    if (word.Length == matchWord.Length) {
                         yield return new SolveResult(words[match], p * m, g, path.ToArray());
-                    } else if (matchWord.Length > word.Length && matchWord.Length > 4) {
+                    } else {
                         any = true;
                     }
                 }
