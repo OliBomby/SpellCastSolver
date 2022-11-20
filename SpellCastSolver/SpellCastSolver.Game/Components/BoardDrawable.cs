@@ -2,6 +2,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.UserInterface;
 using osuTK;
 using osuTK.Graphics;
 using SpellCastSolverLib;
@@ -11,6 +12,7 @@ namespace SpellCastSolver.Game.Components;
 public class BoardDrawable : CompositeDrawable
 {
     private readonly BoardState state;
+    private SpriteText gemsText = null!;
 
     public BoardDrawable(BoardState state) {
         this.state = state;
@@ -34,11 +36,39 @@ public class BoardDrawable : CompositeDrawable
             }
         }
 
-        AddInternal(new SpriteText
+        AddInternal(gemsText = new SpriteText
         {
             Text = $"{state.Gems.ToString()} gems",
             Colour = Color4.Magenta,
-            Anchor = Anchor.BottomLeft
+            Anchor = Anchor.BottomLeft,
+            Origin = Anchor.CentreLeft,
+            Y = 20
+        });
+
+        AddInternal(new BasicButton
+        {
+            Anchor = Anchor.BottomLeft,
+            Origin = Anchor.CentreLeft,
+            Text = @"+",
+            Action = () => { state.Gems++; gemsText.Text = $"{state.Gems.ToString()} gems"; },
+            Size = new Vector2(30, 30),
+            Position = new Vector2(100, 20),
+            BackgroundColour = Color4.Purple,
+            HoverColour = Color4.Pink,
+            FlashColour = Color4.HotPink,
+        });
+
+        AddInternal(new BasicButton
+        {
+            Anchor = Anchor.BottomLeft,
+            Origin = Anchor.CentreLeft,
+            Text = @"-",
+            Action = () => { state.Gems--; gemsText.Text = $"{state.Gems.ToString()} gems"; },
+            Size = new Vector2(30, 30),
+            Position = new Vector2(135, 20),
+            BackgroundColour = Color4.Purple,
+            HoverColour = Color4.Pink,
+            FlashColour = Color4.HotPink,
         });
     }
 }
