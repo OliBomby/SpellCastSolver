@@ -50,6 +50,14 @@ public class ResultDrawable : CompositeDrawable
                 Text = result.Points.ToString(),
                 Colour = Color4.Yellow
             },
+            new SpriteText
+            {
+                Anchor = Anchor.CentreRight,
+                Origin = Anchor.CentreRight,
+                X = -40,
+                Text = result.Gems.ToString(),
+                Colour = Color4.Magenta
+            },
         };
     }
 }
