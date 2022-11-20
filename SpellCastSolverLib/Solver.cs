@@ -16,52 +16,77 @@ public class Solver {
         }
     }
 
-    public IEnumerable<SolveResult> Solve(BoardState board) {
+    public IEnumerable<SolveResult> Solve(BoardState board, bool allowSwaps = true) {
         for (var i = 0; i < board.Rows; i++) {
             for (var j = 0; j < board.Cols; j++) {
                 var s = board.Board[i, j];
-                var word = new StringBuilder(s.Letter.ToString(), capacity:10);
+                var word = new StringBuilder(s.Letter.ToString(), capacity:15);
                 var path = new Stack<(int, int)>();
                 path.Push((i, j));
 
-                foreach (var result in SolveNode(board, path, word, s.Points, s.Gem ? 1 : 0, s.Multiplier)) {
+                foreach (var result in SolveNode(board, path, word, s.Points, s.Gem ? 1 : 0, s.Multiplier, allowSwaps ? board.Gems / 3 : 0)) {
                     yield return result;
+                }
+
+                if (!allowSwaps || board.Gems < 3) continue;
+
+                foreach (char letter in Letters) {
+                    word = new StringBuilder(letter.ToString(), capacity: 15);
+
+                    foreach (var result in SolveNode(board, path, word, 0, s.Gem ? 1 : 0, 1, board.Gems / 3 - 1)) {
+                        yield return result;
+                    }
                 }
             }
         }
     }
 
-    private IEnumerable<SolveResult> SolveNode(BoardState board, Stack<(int, int)> path, StringBuilder word, int points, int gems, int multiplier) {
+    private IEnumerable<SolveResult> SolveNode(BoardState board, Stack<(int, int)> path, StringBuilder word, int points, int gems, int multiplier, int swaps) {
         foreach ((int row, int col) in GetNeighbours(board, path)) {
             var s = board.Board[row, col];
-            int m = multiplier * s.Multiplier;
-            int p = points + s.Points * s.PointsMultiplier;
-            int g = s.Gem ? gems + 1 : gems;
+            int newMultiplier = multiplier * s.Multiplier;
+            int newPoints = points + s.Points * s.PointsMultiplier;
+            int newGems = s.Gem ? gems + 1 : gems;
 
-            word.Append(s.Letter);
-            path.Push((row, col));
+            foreach (var r in TryResult(s.Letter, newMultiplier, newPoints, newGems, swaps)) {
+                yield return r;
+            }
 
-            // Check if any words start with this prefix
-            var matches = trie.Retrieve(word.ToString().ToLower());
-            var any = false;
-            foreach (int match in matches) {
-                // Create result if the whole word is matched
-                if (word.Length == words[match].Length) {
-                    yield return new SolveResult(words[match], p * m, g, path.ToArray());
-                } else {
-                    any = true;
+            if (swaps <= 0) continue;
+
+            foreach (char letter in Letters) {
+                foreach (var r in TryResult(letter, multiplier, points, newGems - 3, swaps - 1)) {
+                    yield return r;
                 }
             }
 
-            if (any) {
-                // Return any recursive results
-                foreach (var solveResult in SolveNode(board, path, word, p, g, m)) {
-                    yield return solveResult;
-                }
-            }
+            IEnumerable<SolveResult> TryResult(char c, int m, int p, int g, int sw) {
+                word.Append(c);
+                path.Push((row, col));
 
-            path.Pop();
-            word.Remove(word.Length - 1, 1);
+                // Check if any words start with this prefix
+                var matches = trie.Retrieve(word.ToString().ToLower());
+                var any = false;
+                foreach (int match in matches) {
+                    var matchWord = words[match];
+                    // Create result if the whole word is matched
+                    if (word.Length == matchWord.Length && word.Length > 4) {
+                        yield return new SolveResult(words[match], p * m, g, path.ToArray());
+                    } else if (matchWord.Length > word.Length && matchWord.Length > 4) {
+                        any = true;
+                    }
+                }
+
+                if (any) {
+                    // Return any recursive results
+                    foreach (var solveResult in SolveNode(board, path, word, p, g, m, sw)) {
+                        yield return solveResult;
+                    }
+                }
+
+                path.Pop();
+                word.Remove(word.Length - 1, 1);
+            }
         }
     }
 
@@ -77,4 +102,9 @@ public class Solver {
             }
         }
     }
+
+    private static readonly char[] Letters = {
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    };
 }
