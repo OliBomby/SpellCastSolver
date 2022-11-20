@@ -1,0 +1,11 @@
+﻿{
+  "solution": {
+    "path": "SpellCastSolver.sln",
+    "projects": [
+      "SpellCastSolver.Desktop\\SpellCastSolver.Desktop.csproj",
+      "SpellCastSolver.Game\\SpellCastSolver.Game.csproj",
+      "SpellCastSolver.Game.Tests\\SpellCastSolver.Game.Tests.csproj",
+      "SpellCastSolver.Resources\\SpellCastSolver.Resources.csproj"
+    ]
+  }
+}

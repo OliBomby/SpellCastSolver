@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Fonts\**\*" />
+        <EmbeddedResource Include="Samples\**\*" />
+        <EmbeddedResource Include="Textures\**\*" />
+        <EmbeddedResource Include="Tracks\**\*" />
+        <None Remove="Dictionaries\words_alpha.txt" />
+        <EmbeddedResource Include="Dictionaries\words_alpha.txt" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Dictionaries" />
+    </ItemGroup>
+</Project>
