@@ -1,7 +1,7 @@
 # SpellCastSolver
 Solves the SpellCast game activity in Discord.
 
-![example](https://i.imgur.com/wgsrqy8.png)
+![example](https://i.imgur.com/7CjTE28.png)
 
 ## Installation
 Download the latest executable for your operating system from the releases and open it.
