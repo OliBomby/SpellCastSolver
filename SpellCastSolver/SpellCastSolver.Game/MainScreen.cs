@@ -27,7 +27,7 @@ namespace SpellCastSolver.Game {
 
             InternalChildren = new Drawable[] {
                 new Box {
-                    Colour = Color4.Black,
+                    Colour = new Color4(30, 30, 30, 255),
                     RelativeSizeAxes = Axes.Both,
                 },
                 new SpriteText {
