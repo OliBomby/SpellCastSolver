@@ -4,7 +4,8 @@ Solves the SpellCast game activity in Discord.
 ![example](https://i.imgur.com/7CjTE28.png)
 
 ## Installation
-Download the latest executable for your operating system from the releases and open it.
+- Download and install [.NET Desktop Runtime 7.0.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
+- Download the latest executable for your operating system from the releases and open it.
 
 ## Usage
 - Type the input letters in the text box on the left. The order is from left to right, top to bottom. Don't add any spaces or separator.s
