@@ -4,13 +4,13 @@ using TrieNet.Trie;
 
 namespace SpellCastSolverLib;
 
-public class Solver {
+public class Solver2 {
     private readonly string[] words;
     private readonly Trie<int> trie;
 
     public int WordCount => words.Length;
 
-    public Solver() {
+    public Solver2() {
         var assembly = Assembly.GetExecutingAssembly();
         const string resourceName = @"SpellCastSolverLib.collins.txt";
         using Stream? stream = assembly.GetManifestResourceStream(resourceName);
@@ -28,7 +28,8 @@ public class Solver {
         for (var i = 0; i < board.Rows; i++) {
             for (var j = 0; j < board.Cols; j++) {
                 var s = board.Board[i, j];
-                var word = new StringBuilder(s.Letter.ToString(), capacity:15);
+                var ch = char.ToLower(s.Letter);
+                var word = new StringBuilder(ch.ToString(), capacity:15);
                 var path = new Stack<(int, int)>();
                 path.Push((i, j));
 
@@ -39,6 +40,8 @@ public class Solver {
                 if (!allowSwaps || board.Gems < 3) continue;
 
                 foreach (char letter in Letters) {
+                    if (letter == ch) continue;  // We already explored that
+
                     word = new StringBuilder(letter.ToString(), capacity: 15);
 
                     foreach (var result in SolveNode(board, path, word, 0, s.Gem ? 1 : 0, 1, board.Gems / 3 - 1)) {
@@ -50,20 +53,45 @@ public class Solver {
     }
 
     private IEnumerable<SolveResult> SolveNode(BoardState board, Stack<(int, int)> path, StringBuilder word, int points, int gems, int multiplier, int swaps) {
+        // Get every next possible letter after word
+        var matches = trie.Retrieve(word.ToString().ToLower());
+        var any = false;
+        var nextLetters = new bool[26];
+        foreach (var match in matches) {
+            var matchWord = words[match];
+            if (word.Length == matchWord.Length) {
+                any = true;
+            } else {
+                // Match is longer
+                nextLetters[matchWord[word.Length] - 'a'] = true;
+            }
+        }
+
+        // Create result if word is a word in the dictionary
+        if (any && word.Length > 2)
+            yield return new SolveResult(word.ToString(), points * multiplier, gems, path.ToArray());
+
+        // Check if any neighbours have the next letters
         foreach ((int row, int col) in GetNeighbours(board, path)) {
             var s = board.Board[row, col];
-            int newMultiplier = multiplier * s.Multiplier;
-            int newPoints = points + s.Points * s.PointsMultiplier;
+            var ch = char.ToLower(s.Letter);
             int newGems = s.Gem ? gems + 1 : gems;
 
-            foreach (var r in TryResult(s.Letter, newMultiplier, newPoints, newGems, swaps)) {
-                yield return r;
+            if (nextLetters[ch - 'a']) {
+                int newMultiplier = multiplier * s.Multiplier;
+                int newPoints = points + s.Points * s.PointsMultiplier;
+
+                foreach (var r in TryResult(ch, newMultiplier, newPoints, newGems, swaps)) {
+                    yield return r;
+                }
             }
 
             if (swaps <= 0) continue;
 
-            foreach (char letter in Letters) {
-                foreach (var r in TryResult(letter, multiplier, points, newGems - 3, swaps - 1)) {
+            for (int i = 0; i < 26; i++) {
+                if (i == ch - 'a' || !nextLetters[i]) continue;
+
+                foreach (var r in TryResult((char)('a' + i), multiplier, points, newGems - 3, swaps - 1)) {
                     yield return r;
                 }
             }
@@ -72,24 +100,9 @@ public class Solver {
                 word.Append(c);
                 path.Push((row, col));
 
-                // Check if any words start with this prefix
-                var matches = trie.Retrieve(word.ToString().ToLower());
-                var any = false;
-                foreach (int match in matches) {
-                    string matchWord = words[match];
-                    // Create result if the whole word is matched
-                    if (word.Length == matchWord.Length) {
-                        yield return new SolveResult(words[match], p * m, g, path.ToArray());
-                    } else {
-                        any = true;
-                    }
-                }
-
-                if (any) {
-                    // Return any recursive results
-                    foreach (var solveResult in SolveNode(board, path, word, p, g, m, sw)) {
-                        yield return solveResult;
-                    }
+                // Return any recursive results
+                foreach (var solveResult in SolveNode(board, path, word, p, g, m, sw)) {
+                    yield return solveResult;
                 }
 
                 path.Pop();
@@ -98,7 +111,7 @@ public class Solver {
         }
     }
 
-    private IEnumerable<(int, int)> GetNeighbours(BoardState board, Stack<(int, int)> path) {
+    private static IEnumerable<(int, int)> GetNeighbours(BoardState board, Stack<(int, int)> path) {
         var end = path.Peek();
 
         for (int i = -1; i < 2; i++) {

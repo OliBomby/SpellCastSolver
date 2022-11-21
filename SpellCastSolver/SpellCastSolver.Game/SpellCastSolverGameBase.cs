@@ -24,14 +24,6 @@ namespace SpellCastSolver.Game {
         [BackgroundDependencyLoader]
         private void load() {
             Resources.AddStore(new DllResourceStore(typeof(SpellCastSolverResources).Assembly));
-            dependencies.Cache(DictionaryStore = new DictionaryStore(new NamespacedResourceStore<byte[]>(Resources, @"Dictionaries")));
         }
-
-        private DependencyContainer dependencies = null!;
-
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
-            dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-
-        public DictionaryStore DictionaryStore { get; private set; } = null!;
     }
 }

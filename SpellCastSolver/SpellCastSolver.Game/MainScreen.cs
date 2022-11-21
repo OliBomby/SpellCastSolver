@@ -22,9 +22,8 @@ namespace SpellCastSolver.Game {
         private BoardDrawable boardDrawable = null!;
 
         [BackgroundDependencyLoader]
-        private void load(DictionaryStore dictionaryStore) {
-            var words = dictionaryStore.Get(@"words_alpha.txt");
-            solver = new Solver(words);
+        private void load() {
+            solver = new Solver();
 
             InternalChildren = new Drawable[] {
                 new Box {
@@ -47,7 +46,7 @@ namespace SpellCastSolver.Game {
                 {
                     Anchor = Anchor.TopLeft,
                     Position = new Vector2(20),
-                    Text = $"{words.Length.ToString()} words loaded",
+                    Text = $"{solver.WordCount.ToString()} words loaded",
                 },
                 new BasicButton
                 {
@@ -124,7 +123,7 @@ namespace SpellCastSolver.Game {
             var result = solver.Solve(boardState);
             resultsContainer.Clear(true);
 
-            foreach (var solveResult in result.OrderByDescending(o => o.Points).Take(40))
+            foreach (var solveResult in result.OrderByDescending(o => o.Points + o.Gems + o.Word.Length * 0.1).DistinctBy(o => o.Word).Take(40))
             {
                 var resultDrawable = new ResultDrawable(solveResult)
                 {

@@ -10,4 +10,9 @@
       <PackageReference Include="TrieNet2" Version="2.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="collins.txt" />
+      <EmbeddedResource Include="collins.txt" />
+    </ItemGroup>
+
 </Project>
