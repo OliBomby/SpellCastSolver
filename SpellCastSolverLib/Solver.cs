@@ -72,16 +72,20 @@ public class Solver {
                 word.Append(c);
                 path.Push((row, col));
 
-                // Check if any words start with this prefix
-                var matches = trie.Retrieve(word.ToString().ToLower());
                 var any = false;
-                foreach (int match in matches) {
-                    string matchWord = words[match];
-                    // Create result if the whole word is matched
-                    if (word.Length == matchWord.Length) {
-                        yield return new SolveResult(words[match], p * m, g, path.ToArray());
-                    } else {
-                        any = true;
+                if (word.Length < 4) {
+                    any = true;
+                } else {
+                    // Check if any words start with this prefix
+                    var matches = trie.Retrieve(word.ToString().ToLower());
+                    foreach (int match in matches) {
+                        string matchWord = words[match];
+                        // Create result if the whole word is matched
+                        if (word.Length == matchWord.Length) {
+                            yield return new SolveResult(words[match], p * m, g, path.ToArray());
+                        } else {
+                            any = true;
+                        }
                     }
                 }
 
