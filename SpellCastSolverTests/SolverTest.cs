@@ -17,7 +17,7 @@ public class Tests {
         var best = results.First();
 
         Assert.AreEqual("outwore", best.Word);
-        Assert.AreEqual(36, best.Points);
+        Assert.AreEqual(46, best.Points);
         Assert.AreEqual(3, best.Gems);
     }
 
@@ -27,7 +27,7 @@ public class Tests {
         var best = results.First();
 
         Assert.AreEqual("outworked", best.Word);
-        Assert.AreEqual(42, best.Points);
+        Assert.AreEqual(52, best.Points);
         Assert.AreEqual(0, best.Gems);
     }
 }

@@ -82,7 +82,7 @@ public class Solver {
                         string matchWord = words[match];
                         // Create result if the whole word is matched
                         if (word.Length == matchWord.Length) {
-                            yield return new SolveResult(words[match], p * m, g, path.ToArray());
+                            yield return new SolveResult(words[match],  word.Length > 5 ? p * m + 10 : p * m, g, path.ToArray());
                         } else {
                             any = true;
                         }
