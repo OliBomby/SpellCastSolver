@@ -63,7 +63,7 @@ public class Solver {
             if (swaps <= 0) continue;
 
             foreach (char letter in Letters) {
-                foreach (var r in TryResult(letter, multiplier, points, newGems - 3, swaps - 1)) {
+                foreach (var r in TryResult(letter, newMultiplier, points + LetterState.LetterPoints[letter] * s.PointsMultiplier, newGems - 3, swaps - 1)) {
                     yield return r;
                 }
             }

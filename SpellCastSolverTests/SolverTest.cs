@@ -27,7 +27,7 @@ public class Tests {
         var best = results.First();
 
         Assert.AreEqual("outworked", best.Word);
-        Assert.AreEqual(52, best.Points);
+        Assert.AreEqual(64, best.Points);
         Assert.AreEqual(0, best.Gems);
     }
 }
