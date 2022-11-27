@@ -18,7 +18,7 @@ Solves the SpellCast game activity in Discord.
   - 2x multiplier on the whole word (magenta)
 - Press the + and - buttons underneath the grid to change the number of gems available. 
 If you have 3 or more gems, then the algorithm will attempt to swap cells in order to obtain better results.
-I don't recommend having 6 or more gems since it takes a long time to compute.
+I don't recommend having 9 or more gems since it takes forever to compute.
 - Press the 'Solve' button to find the optimal words for the problem.
 - Observe the listed results. Each entry has the word, the number of gems obtained (magenta), and the number of points obtained (yellow).
 - Click on a result to toggle a visualization of the path in the grid.
