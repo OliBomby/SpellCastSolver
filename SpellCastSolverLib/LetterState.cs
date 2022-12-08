@@ -6,8 +6,7 @@ public class LetterState
     public int PointsMultiplier;
     public int Multiplier;
     public bool Gem;
-
-    public int Points => LetterPoints[char.ToLower(Letter)];
+    public readonly int Points;
 
     public LetterState(char letter, int pointsMultiplier = 1, int multiplier = 1, bool gem = false)
     {
@@ -15,6 +14,12 @@ public class LetterState
         PointsMultiplier = pointsMultiplier;
         Multiplier = multiplier;
         Gem = gem;
+        Points = GetPoints(letter);
+    }
+
+    public static int GetPoints(char letter)
+    {
+        return LetterPoints.ContainsKey(char.ToLower(letter)) ? LetterPoints[char.ToLower(letter)] : 0;
     }
 
     public static readonly Dictionary<char, int> LetterPoints = new() {
