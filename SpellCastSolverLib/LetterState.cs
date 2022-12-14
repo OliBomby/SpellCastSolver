@@ -1,20 +1,24 @@
 ﻿namespace SpellCastSolverLib;
 
-public class LetterState
-{
+public class LetterState {
+    private int multiplier;
+
     public char Letter;
     public int PointsMultiplier;
-    public int Multiplier;
     public bool Gem;
-    public readonly int Points;
+    public int Points => GetPoints(Letter);
+
+    public int Multiplier {
+        get => LetterPoints.ContainsKey(char.ToLower(Letter)) ? multiplier : 0;
+        set => multiplier = value;
+    }
 
     public LetterState(char letter, int pointsMultiplier = 1, int multiplier = 1, bool gem = false)
     {
         Letter = letter;
         PointsMultiplier = pointsMultiplier;
-        Multiplier = multiplier;
+        this.multiplier = multiplier;
         Gem = gem;
-        Points = GetPoints(letter);
     }
 
     public static int GetPoints(char letter)
