@@ -16,11 +16,11 @@ public class BoardState
 
     public static BoardState Default => new(new LetterState[,]
     {
-        { new('H'), new('B'), new('O', 3, gem:true), new('G', gem:true), new('E') },
-        { new('E', gem:true), new('R'), new('E', gem:true), new('W'), new('A') },
+        { new('H'), new('B'), new('O', 3), new('G'), new('E') },
+        { new('E'), new('R'), new('E'), new('W'), new('A') },
         { new('Q'), new('I'), new('F'), new('X'), new('T') },
-        { new('O'), new('T'), new('N'), new('E', gem:true), new('U', multiplier:2) },
-        { new('I', gem:true), new('L', gem:true), new('D'), new('I', gem:true), new('O', gem:true) }
+        { new('O'), new('T'), new('N'), new('E'), new('U', multiplier:2) },
+        { new('I'), new('L'), new('D'), new('I'), new('O') }
     }, 0);
 
     public bool IsValid((int, int) pos) {
