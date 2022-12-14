@@ -41,7 +41,7 @@ public class Solver {
                 foreach (char letter in Letters) {
                     word = new StringBuilder(letter.ToString(), capacity: 15);
 
-                    foreach (var result in SolveNode(board, path, word, 0, s.Gem ? 1 : 0, 1, board.Gems / 3 - 1)) {
+                    foreach (var result in SolveNode(board, path, word, s.Points, s.Gem ? 1 : 0, s.Multiplier, board.Gems / 3 - 1)) {
                         yield return result;
                     }
                 }
