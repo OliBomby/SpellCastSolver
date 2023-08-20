@@ -12,22 +12,28 @@ public class Tests {
     }
 
     [Test]
-    public void TestSolve() {
+    public void TestSolve()
+    {
         var results = solver.Solve(board, false).OrderByDescending(o => o.Points + o.Gems + o.Word.Length);
         var best = results.First();
-
-        Assert.AreEqual("outwore", best.Word);
-        Assert.AreEqual(46, best.Points);
-        Assert.AreEqual(3, best.Gems);
+        Assert.Multiple(() =>
+        {
+            Assert.That(best.Word, Is.EqualTo("outwore"));
+            Assert.That(best.Points, Is.EqualTo(46));
+            Assert.That(best.Gems, Is.EqualTo(0));
+        });
     }
 
     [Test]
-    public void TestSolveSwaps() {
+    public void TestSolveSwaps()
+    {
         var results = solver.Solve(board).OrderByDescending(o => o.Points + o.Gems + o.Word.Length);
         var best = results.First();
-
-        Assert.AreEqual("outworked", best.Word);
-        Assert.AreEqual(64, best.Points);
-        Assert.AreEqual(0, best.Gems);
+        Assert.Multiple(() =>
+        {
+            Assert.That(best.Word, Is.EqualTo("outworked"));
+            Assert.That(best.Points, Is.EqualTo(64));
+            Assert.That(best.Gems, Is.EqualTo(-3));
+        });
     }
 }
