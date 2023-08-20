@@ -1,7 +1,7 @@
 using osu.Framework.Testing;
 
 namespace SpellCastSolver.Game.Tests.Visual {
-    public class SpellCastSolverTestScene : TestScene {
+    public partial class SpellCastSolverTestScene : TestScene {
         protected override ITestSceneTestRunner CreateRunner() => new SpellCastSolverTestSceneTestRunner();
 
         private class SpellCastSolverTestSceneTestRunner : SpellCastSolverGameBase, ITestSceneTestRunner {

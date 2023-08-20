@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace SpellCastSolver.Game.Tests.Visual {
     [TestFixture]
-    public class TestSceneMainScreen : SpellCastSolverTestScene {
+    public partial class TestSceneMainScreen : SpellCastSolverTestScene {
         // Add visual tests to ensure correct behaviour of your game: https://github.com/ppy/osu-framework/wiki/Development-and-Testing
         // You can make changes to classes associated with the tests and they will recompile and update immediately.
 

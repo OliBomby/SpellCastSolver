@@ -8,7 +8,7 @@
         <ProjectReference Include="..\SpellCastSolver.Game\SpellCastSolver.Game.csproj" />
     </ItemGroup>
     <ItemGroup Label="Package References">
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0-preview-23371-04" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@ using osu.Framework.Platform;
 using osu.Framework.Testing;
 
 namespace SpellCastSolver.Game.Tests {
-    public class SpellCastSolverTestBrowser : SpellCastSolverGameBase {
+    public partial class SpellCastSolverTestBrowser : SpellCastSolverGameBase {
         protected override void LoadComplete() {
             base.LoadComplete();
 

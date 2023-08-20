@@ -12,7 +12,7 @@ using SpellCastSolverLib;
 
 namespace SpellCastSolver.Game.Components;
 
-public class ResultDrawable : CompositeDrawable
+public partial class ResultDrawable : CompositeDrawable
 {
     private readonly SolveResult result;
     private Drawable box = null!;

@@ -14,7 +14,7 @@ using SpellCastSolver.Game.Components;
 using SpellCastSolverLib;
 
 namespace SpellCastSolver.Game {
-    public class MainScreen : Screen {
+    public partial class MainScreen : Screen {
         private FillFlowContainer resultsContainer = null!;
         private Solver solver = null!;
         private readonly BoardState boardState = BoardState.Default;

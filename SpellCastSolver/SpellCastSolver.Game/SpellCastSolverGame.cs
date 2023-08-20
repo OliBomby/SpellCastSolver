@@ -3,7 +3,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Screens;
 
 namespace SpellCastSolver.Game {
-    public class SpellCastSolverGame : SpellCastSolverGameBase {
+    public partial class SpellCastSolverGame : SpellCastSolverGameBase {
         private ScreenStack screenStack = null!;
 
         [BackgroundDependencyLoader]

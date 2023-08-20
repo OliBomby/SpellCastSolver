@@ -10,7 +10,7 @@ using SpellCastSolverLib;
 
 namespace SpellCastSolver.Game.Components;
 
-public class BoardDrawable : CompositeDrawable
+public partial class BoardDrawable : CompositeDrawable
 {
     private readonly BoardState state;
     private SpriteText gemsText = null!;

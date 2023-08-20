@@ -6,7 +6,7 @@ using osuTK;
 using SpellCastSolver.Resources;
 
 namespace SpellCastSolver.Game {
-    public class SpellCastSolverGameBase : osu.Framework.Game {
+    public partial class SpellCastSolverGameBase : osu.Framework.Game {
         // Anything in this class is shared between the test browser and the game implementation.
         // It allows for caching global dependencies that should be accessible to tests, or changing
         // the screen scaling for all components including the test browser and framework overlays.

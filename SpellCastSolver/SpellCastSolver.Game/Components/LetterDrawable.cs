@@ -12,7 +12,7 @@ using SpellCastSolverLib;
 
 namespace SpellCastSolver.Game.Components;
 
-public class LetterDrawable : CompositeDrawable
+public partial class LetterDrawable : CompositeDrawable
 {
     private LetterState state;
     private Box gemBox = null!;
