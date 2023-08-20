@@ -39,7 +39,7 @@ public class Solver2 {
 
                 if (!allowSwaps || board.Gems < 3) continue;
 
-                foreach (char letter in Letters) {
+                foreach (char letter in letters) {
                     if (letter == ch) continue;  // We already explored that
 
                     word = new StringBuilder(letter.ToString(), capacity: 15);
@@ -81,7 +81,7 @@ public class Solver2 {
                 int newMultiplier = multiplier * s.Multiplier;
                 int newPoints = points + s.Points * s.PointsMultiplier;
 
-                foreach (var r in TryResult(ch, newMultiplier, newPoints, newGems, swaps)) {
+                foreach (var r in tryResult(ch, newMultiplier, newPoints, newGems, swaps)) {
                     yield return r;
                 }
             }
@@ -91,12 +91,12 @@ public class Solver2 {
             for (int i = 0; i < 26; i++) {
                 if (i == ch - 'a' || !nextLetters[i]) continue;
 
-                foreach (var r in TryResult((char)('a' + i), multiplier, points, newGems - 3, swaps - 1)) {
+                foreach (var r in tryResult((char)('a' + i), multiplier, points, newGems - 3, swaps - 1)) {
                     yield return r;
                 }
             }
 
-            IEnumerable<SolveResult> TryResult(char c, int m, int p, int g, int sw) {
+            IEnumerable<SolveResult> tryResult(char c, int m, int p, int g, int sw) {
                 word.Append(c);
                 path.Push((row, col));
 
@@ -124,7 +124,7 @@ public class Solver2 {
         }
     }
 
-    private static readonly char[] Letters = {
+    private static readonly char[] letters = {
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
         'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     };

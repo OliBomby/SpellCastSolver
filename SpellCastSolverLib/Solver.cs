@@ -38,7 +38,7 @@ public class Solver {
 
                 if (!allowSwaps || board.Gems < 3) continue;
 
-                foreach (char letter in Letters) {
+                foreach (char letter in letters) {
                     word = new StringBuilder(letter.ToString(), capacity: 15);
 
                     foreach (var result in SolveNode(board, path, word, s.Points, s.Gem ? 1 : 0, s.Multiplier, board.Gems / 3 - 1)) {
@@ -56,19 +56,19 @@ public class Solver {
             int newPoints = points + s.Points * s.PointsMultiplier;
             int newGems = s.Gem ? gems + 1 : gems;
 
-            foreach (var r in TryResult(s.Letter, newMultiplier, newPoints, newGems, swaps)) {
+            foreach (var r in tryResult(s.Letter, newMultiplier, newPoints, newGems, swaps)) {
                 yield return r;
             }
 
             if (swaps <= 0) continue;
 
-            foreach (char letter in Letters) {
-                foreach (var r in TryResult(letter, newMultiplier, points + LetterState.LetterPoints[letter] * s.PointsMultiplier, newGems - 3, swaps - 1)) {
+            foreach (char letter in letters) {
+                foreach (var r in tryResult(letter, newMultiplier, points + LetterState.LetterPoints[letter] * s.PointsMultiplier, newGems - 3, swaps - 1)) {
                     yield return r;
                 }
             }
 
-            IEnumerable<SolveResult> TryResult(char c, int m, int p, int g, int sw) {
+            IEnumerable<SolveResult> tryResult(char c, int m, int p, int g, int sw) {
                 word.Append(c);
                 path.Push((row, col));
 
@@ -115,7 +115,7 @@ public class Solver {
         }
     }
 
-    private static readonly char[] Letters = {
+    private static readonly char[] letters = {
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
         'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     };
